@@ -1,0 +1,31 @@
+const { WebSocketServer } = require("ws")
+const { useServer} = require("graphql-ws/lib/use/ws")
+const schema = require("./schema")
+const { ApolloServer } = require("@apollo/server")
+const { ApolloServerPluginDrainHttpServer } = require("@apollo/server/plugin/drainHttpServer")
+
+const buildGraphqlServer = (httpServer) => {
+    let wsServer = new WebSocketServer({
+        server: httpServer,
+        path: "/"
+    })
+    let serverCleanup = useServer({schema}, wsServer)
+
+    return new ApolloServer({
+        schema,
+        plugins: [
+        ApolloServerPluginDrainHttpServer({httpServer}), 
+        {
+            async serverWillStart () {
+                return {
+                        async drainServer(){
+                            await serverCleanup.dispose()
+                        }
+                }
+            }
+         }
+        ]
+    })
+}
+
+module.exports = buildGraphqlServer

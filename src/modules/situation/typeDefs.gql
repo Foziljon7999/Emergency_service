@@ -1,0 +1,29 @@
+type Query {
+    situations: [Situation]
+    situations(category_id: ID!): [Situation]
+}
+
+type Situation {
+    id: ID!
+    user_id: ID!
+    subcategory_id: ID!
+    location: String!
+    status: String! 
+    created_at: String
+    updated_at: String
+}
+
+
+
+type Mutation {
+    updateSituationStatus(id: ID!, status: String): [Situation]
+    createSituation(user_id: ID!, subcategory_id: ID!, location: String!, status: String!, created_at: String, updated_at: String): [Situation]
+    updateSituation(id: ID!, user_id: ID, subcategory_id: ID, location: String, status: String, created_at: String, updated_at: String) : [Situation]
+    deleteSituation(id: ID!): [Situation]
+}
+
+
+
+type Subscription {
+    situation: [Situation]
+}

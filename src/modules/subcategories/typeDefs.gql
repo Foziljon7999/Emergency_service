@@ -1,0 +1,20 @@
+type Query {
+    subcategories: [Subcategory]
+    subcategories(category_id: ID!): [Subcategory]
+}
+
+type Subcategory {
+    id: ID!
+    name: String
+    category_id: ID
+}
+
+type Mutation {
+    createSubcategory(name: String!, category_id: ID!): [Subcategory],
+    updateSubcategory(id: ID!, name: String, category_id: ID): [Subcategory],
+    deleteSubcategory(id: ID!): [Subcategory]
+}
+
+type Subscription {
+    subcategories: [Subcategory]
+}

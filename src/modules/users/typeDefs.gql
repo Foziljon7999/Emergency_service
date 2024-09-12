@@ -1,0 +1,23 @@
+type Query {
+    users: [User]
+}
+
+type User {
+    id: ID!
+    name: String
+    phone: String
+    email: String
+}
+
+input RegisterInput {
+    name: String!
+    phone: String!
+    email: String!
+}
+
+type Mutation {
+    register(input: RegisterInput!): User
+    createUser( name: String!, phone: String!, email: String!): User
+    updateUser(id: ID!, name: String, phone: String, email: String): User
+    deleteUser(id: ID!): User
+}
